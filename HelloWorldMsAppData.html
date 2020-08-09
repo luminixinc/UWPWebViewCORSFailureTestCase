@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>hello world</title>
+<script> 
+	var runfetch = function (){
+		var url = document.getElementById('urlInput').value;
+		fetch(url)
+			.then(response => {
+				var responseResult = 'Response Code: '+response.status+' '+response.statusText;
+				console.log(responseResult);
+				var responseArea = document.getElementById('responseArea');
+				if (!response.ok) {
+					console.error('Network response was not ok');
+					responseArea.value = 'Network response was not ok.. '+responseResult;
+				}
+				else {
+					response.text().then( text => responseArea.value = text );
+				}
+			})
+			.catch(error => {
+				console.error('There has been a problem with your fetch operation:', error);
+				responseArea.value = 'There has been a problem with your fetch operation: ' + error;
+			});
+			
+	}
+</script></head>
+
+<body>Hello World
+<BR/>
+<label for='urlInput'>Enter URL: </label><input id='urlInput' type='text' placeholder='e.g. https://www.bing.com' value='https://www.bing.com' size='100' />
+<BR/>
+<button onclick='runfetch();' >Get Data</button><span width='20'></span><button onclick='location.reload();'>Refresh</button>
+<BR/>
+<textarea cols='100' rows='30' id='responseArea'></textarea>
+</body>
+</html>
